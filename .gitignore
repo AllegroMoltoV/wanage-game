@@ -73,3 +73,7 @@ crashlytics-build.properties
 
 # data
 /[Dd]ata
+
+# builds
+/[Bb]uilds
+/[Bb]uild
