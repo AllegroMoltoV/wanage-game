@@ -5,17 +5,27 @@ using UnityEngine;
 public class InputManager : MonoBehaviour
 {
     public bool isPressed;
+    public Vector2 positionPressed;
 
     // Start is called before the first frame update
     void Start()
     {
         isPressed = false;
+        positionPressed = new Vector2();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         isPressed = checkPressed();
+        if (isPressed)
+        {
+            positionPressed = getPositionPressed();
+        }
+        else
+        {
+            positionPressed = new Vector2();
+        }
     }
 
     private bool checkPressed()
@@ -47,5 +57,16 @@ public class InputManager : MonoBehaviour
             return false;
         }
 #endif // UNITY_EDITOR
+    }
+
+    private Vector2 getPositionPressed()
+    {
+#if UNITY_EDITOR || UNITY_WEBGL
+        Vector2 ret = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+#else
+        Touch touch = Input.GetTouch(0);
+        Vector2 ret = new Vector2(touch.position.x, touch.position.y);
+#endif
+        return ret;
     }
 }
